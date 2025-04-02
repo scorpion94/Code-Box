@@ -1,0 +1,7 @@
+run {
+DUPLICATE DATABASE TO <target_db_name>
+    FROM ACTIVE DATABASE
+    SPFILE
+        parameter_value_convert ('<SOURCE_DB_NAME>','<TARGET_DB_NAME>')
+    NOFILENAMECHECK;
+}
