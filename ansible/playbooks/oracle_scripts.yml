@@ -3,4 +3,4 @@
   hosts: all
   gather_facts: true
   roles:
-    - name: oracle_test
+    - name: oracle_scripts
