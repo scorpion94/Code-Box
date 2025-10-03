@@ -15,7 +15,7 @@ begin
     v_mgw_mq_properties.inbound_log_queue  := '';
        
     dbms_mgwadm.create_msgsystem_link(
-       linkname => 'MQLINK_SWIFT', 
+       linkname => '<linkname>', 
        properties => v_mgw_mq_properties, 
        options => v_mgw_properties);
  end;
