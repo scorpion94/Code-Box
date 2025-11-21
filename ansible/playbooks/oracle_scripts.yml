@@ -1,6 +1,0 @@
----
-- name: Oracle Testskript ausführen
-  hosts: all
-  gather_facts: true
-  roles:
-    - name: oracle_scripts
