@@ -1,4 +1,4 @@
-# Small Tipp for Searching in ansible notes
+# Small Tipp for Searching in ansible facts
 
 ````yaml
 - name: "Search in Facts"
