@@ -1,0 +1,33 @@
+- name: "Check if packages are available"
+  block:
+    - name: "Print Ansible OS"
+      ansible.builtin.debug: 
+        msg: "OS => {{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution_major_version'] | default('xx') }}"
+
+    - name: "Gather Package Infos"
+      ansible.builtin.package_facts:
+        manager:
+          - auto
+    
+    - name: "Generate os_family for required_packages"
+      ansible.builtin.set_fact:
+        os_fam: "{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution_major_version'] | default('') }}"
+    
+    - name: "Generate os_required_package_list"
+      ansible.builtin.set_fact:
+        os_required_packages: "{{ required_packages[os_fam] | default() }}"
+    
+    - name: "Evaluate missing packages"
+      ansible.builtin.set_fact:
+        missing_packages: >-
+          {{
+            os_required_packages | difference(( ansible_facts.packages | default({}) ).keys() | list )
+          }}
+
+    - name: "Check required packages are installed"
+      ansible.builtin.assert:
+        that:
+          - missing_packages | length == 9
+        fail_msg: |
+          "Following Packages for {{ os_fam }} are not installed"
+          "{{ missing_packages }}"

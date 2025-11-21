@@ -1,0 +1,36 @@
+---
+# Note! Yes is possible to reduce the code for u_device to one statement - in this case I used it for multiple examples!
+# Print Mount List
+
+- name: "Print out Mounts"
+  ansible.builtin.debug:
+    msg: "{{ ansible_facts.mounts }}"
+
+- name: "Print out Mounts"
+  ansible.builtin.debug:
+    msg: "{{ ansible_facts.mounts | map(attribute='mount') | list }}"
+
+- name: "Check if Vol is existing"
+  ansible.builtin.assert:
+    that:
+      - "( ansible_facts.mounts | selectattr('mount','equalto',u_device) | list | length ) > 0"
+    fail_msg: "Volume {{ u_device }} is not mounted"
+    success_msg: "Volume {{ u_device }} is mounted"
+
+
+- name: "Set fact for Volume"
+  set_fact:
+    u01_device: "{{ ansible_facts.mounts | selectattr('mount','equalto',u_device) | first }}"
+
+- name: "Debug"
+  ansible.builtin.debug:
+    msg: "{{ u01_device }}"
+
+- name: "Check size of Volume"
+  ansible.builtin.assert:
+    that:
+      - ( u01_device.size_available | int ) >= (u_device_size_gb | int) * 1024 * 1024 * 1024
+    fail_msg: |
+      "{{ u_device }} has less then {{ u_device_size_gb }}GB available"
+      "Only {{ u01_device.size_available | human_readable }} are available""
+    success_msg: "{{ u_device }} has {{ u01_device.size_available | human_readable }} available"

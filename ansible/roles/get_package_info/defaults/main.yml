@@ -1,0 +1,7 @@
+---
+required_packages:
+  Ubuntu_24:
+    - python3
+    - zip
+    - ifconfig
+    
