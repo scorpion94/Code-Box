@@ -1,7 +1,5 @@
 all:
   children:
-    vm:
+    db:
       hosts:
-        vm2:
-          ansible_host: vm-ubuntu-1
-          ansible_python_interpreter: /usr/bin/python3.12
+        ol9-gi:
