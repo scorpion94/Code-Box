@@ -3,3 +3,7 @@ all:
     db:
       hosts:
         ol9-gi:
+    apache:
+      hosts:
+        vm-ubuntu01:
+
