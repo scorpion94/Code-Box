@@ -1,0 +1,32 @@
+---
+- name: "Check that VMState is poweroff"
+  ansible.builtin.assert:
+    that:
+      - vbox_info_infos_dict[vm_name].VMState == 'poweroff'
+    fail_msg: "{{ vm_name }} must be shut down!"
+
+- name: "Check Forward Rules"
+  ansible.builtin.set_fact:
+    vbox_manage_tcp_rules: >-
+      {{
+        vbox_info_infos_dict[vm_name]
+        | dict2items
+        | selectattr('key', 'search', 'Forward')
+        | map(attribute='value')
+        | list
+      }}
+
+
+- name: "Change Parameter"
+  ansible.builtin.command: >
+    "{{ vbox_manage_bin }}"/VBoxManage modifyvm {{ vm_name }}
+    --nat-pf1="{{ item.key }},{{ item.value.protocol }},,{{ item.value.host_port }},,{{ item.value.guest_port }}"
+  loop: "{{ vbox_manage_rules | dict2items }}"
+  loop_control:
+    label: "{{ vm_name }}"
+  changed_when: true
+  when: "(item.value.host_port | string ) not in (vbox_manage_tcp_rules | join('\n'))"
+  notify:
+    - Start Virtual Machine
+
+# VBoxManage modifyvm "vm-ubunut01" --nat-pf1="ssh-forward,tcp,,2222,,22"

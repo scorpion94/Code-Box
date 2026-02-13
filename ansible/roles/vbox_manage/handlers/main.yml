@@ -1,0 +1,15 @@
+---
+- name: "Start Virtual Machine"
+  ansible.builtin.shell: >
+    "{{ vbox_manage_bin }}"/VBoxManage startvm "{{ vm_name }}" --type headless
+  register: vbox_manage_startvm
+  when: vbox_info_infos_dict[vm_name].VMState in ['poweroff', 'saved']
+  changed_when: true
+
+# - name: "Wait for ssh-deamon to start"
+#   ansible.builtin.wait_for:
+#     port: "{{ manage_vbox_forwared_port }}"
+#     delay: 10
+#     connect_timeout: 20
+
+# VBoxManage modifyvm "vm-ubunut01" --nat-pf1="ssh-forward,tcp,,2222,,22"

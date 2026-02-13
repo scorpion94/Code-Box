@@ -1,0 +1,56 @@
+---
+# Setze hier awk auf auf das Anführungszeichen da VBOX keine regulation hat was namensgebung angeht
+# Es ist aber sicher das VBOX den Namen immer mit Anfuehrungszeichen ausgibt
+- name: "Get list of virtual maschines"
+  ansible.builtin.shell: |
+    set -o pipefail
+    /Applications/VirtualBox.app/Contents/MacOS/VBoxManage list vms | awk -F'"' '{print $2}' | jq -R '.' | jq -s
+  args:
+    executable: /bin/bash
+  register: vbox_info_vm_list_raw
+  changed_when: false
+
+- name: "Generate virtualbox VM Dict"
+  ansible.builtin.set_fact:
+    vbox_info_vm_dict: "{{ vbox_info_vm_list_raw.stdout | from_json }}"
+
+- name: "Get VBox state"
+  ansible.builtin.shell: |
+    set -o pipefail
+    /Applications/VirtualBox.app/Contents/MacOS/VBoxManage showvminfo "{{ item }}" --machinereadable \
+    | tr -d '"' \
+    | jq -Rn '
+      reduce inputs as $line (
+        {};                         # Leeres Object -> falls result = 0
+        ($line | index("=")) as $i
+        | if $i == null
+          then .
+          else
+            . + { ($line[0:$i]) : ($line[$i+1:]) }
+          end
+      )
+    '
+  args:
+    executable: /bin/bash
+  register: vbox_info_infos_raw
+  changed_when: false
+  loop: "{{ vbox_info_vm_dict }}"
+  loop_control:
+    label: "{{ item }}"
+
+- name: "Generate Dictornary with all VM Informations"
+  ansible.builtin.set_fact:
+    vbox_info_infos_dict: >-
+      {{
+        vbox_info_infos_dict | default({})
+        | combine(
+            {
+              item.item: (item.stdout | from_json)
+            },
+            recursive=True
+          )
+      }}
+  changed_when: false
+  loop: "{{ vbox_info_infos_raw.results }}"
+  loop_control:
+    label: "{{ item.item }}"
