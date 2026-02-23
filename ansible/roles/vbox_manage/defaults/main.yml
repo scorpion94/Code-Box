@@ -7,7 +7,9 @@ vbox_manage_rules:
     protocol: tcp
     host_port: 2222
     guest_port: 22
+    enabled: true
   webserver-forward:
     protocol: tcp
     host_port: 8500
     guest_port: 80
+    enabled: false

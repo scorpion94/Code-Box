@@ -2,8 +2,8 @@
 - name: "Check that VMState is poweroff"
   ansible.builtin.assert:
     that:
-      - vbox_info_infos_dict[vm_name].VMState == 'poweroff'
-    fail_msg: "{{ vm_name }} must be shut down!"
+      - vbox_info_infos_dict[vm_name].VMState in ['poweroff', 'saved']
+    fail_msg: "{{ vm_name }} must be in state poweroff or saved!"
 
 - name: "Check Forward Rules"
   ansible.builtin.set_fact:
@@ -16,17 +16,26 @@
         | list
       }}
 
-
-- name: "Change Parameter"
+- name: "Add network rules"
   ansible.builtin.command: >
-    "{{ vbox_manage_bin }}"/VBoxManage modifyvm {{ vm_name }}
+    "{{ vbox_manage_path }}"/VBoxManage modifyvm {{ vm_name }}
     --nat-pf1="{{ item.key }},{{ item.value.protocol }},,{{ item.value.host_port }},,{{ item.value.guest_port }}"
   loop: "{{ vbox_manage_rules | dict2items }}"
   loop_control:
-    label: "{{ vm_name }}"
+    label: "{{ vm_name }}:{{ item.key }}"
   changed_when: true
-  when: "(item.value.host_port | string ) not in (vbox_manage_tcp_rules | join('\n'))"
-  notify:
-    - Start Virtual Machine
+  when:
+    - "item.value.enabled"
+    - "(item.value.host_port | string ) not in (vbox_manage_tcp_rules | join('\n'))"
+    - "item.key not in (vbox_manage_tcp_rules | join('\n'))"
 
-# VBoxManage modifyvm "vm-ubunut01" --nat-pf1="ssh-forward,tcp,,2222,,22"
+- name: "Remove network rules"
+  ansible.builtin.command: >
+    "{{ vbox_manage_path }}"/VBoxManage modifyvm "{{ vm_name }}" --nat-pf1 delete "{{ item.key }}"
+  loop: "{{ vbox_manage_rules | dict2items }}"
+  loop_control:
+    label: "{{ vm_name }}:{{ item.key }}"
+  changed_when: true
+  when:
+    - "not item.value.enabled"
+    - "item.key in (vbox_manage_tcp_rules | join('\n'))"
