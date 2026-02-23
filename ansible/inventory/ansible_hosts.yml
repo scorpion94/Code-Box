@@ -1,8 +1,8 @@
 all:
   children:
-    db:
+    oracle:
       hosts:
-        ol9-gi:
+        vm-ol8-01:
     apache:
       hosts:
         vm-ubuntu01:
