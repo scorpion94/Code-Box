@@ -1,7 +1,0 @@
----
-- name: Oracle Testskript ausführen
-  hosts: all
-  gather_facts: true
-  roles:
-    # - get_mount_info
-    - get_package_info

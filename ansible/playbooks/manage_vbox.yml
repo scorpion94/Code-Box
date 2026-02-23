@@ -1,6 +1,0 @@
----
-- name: Oracle Testskript ausführen
-  hosts: localhost
-  gather_facts: false
-  roles:
-    - vbox_manage
