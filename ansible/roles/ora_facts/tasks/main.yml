@@ -1,0 +1,25 @@
+---
+- name: "Run ora_dict.sh"
+  ansible.builtin.script: "ora_dict.sh"
+  environment:
+    oratab: "{{ oratab }}"
+  changed_when: false
+  register: ora_facts_output
+  # Set check_mode to false - since other roles might need those informations
+  check_mode: false
+
+- name: "Generate ora_facts_dict"
+  ansible.builtin.set_fact:
+    ora_facts_dict: >
+      {{
+        (ora_facts_dict | default({}))
+          | combine(item | from_json, recursive=True )
+      }}
+  loop: "{{ ora_facts_output.stdout_lines | default([]) }}"
+  when: item | trim != ''
+  changed_when: false
+
+- name: "Print ora_facts_dict"
+  ansible.builtin.debug:
+    var: ora_facts_dict
+  when: "ansible_verbosity > 2"
