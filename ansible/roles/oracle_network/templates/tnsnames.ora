@@ -1,0 +1,28 @@
+{% set host = ansible_facts['all_ipv4_addresses'][1] | default(ansible_facts["hostname"]) %}
+{% set port = 1521 %}
+
+{{ cdb }} =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = {{ host }})(PORT = {{ port }}))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = {{ cdb }})
+    )
+  )
+
+
+{% set pdb_list = (db_vars.pdbs | default({}) | list) %}
+{% for pdb in (pdb_list | reject('equalto', 'PDB$SEED') | list) %}
+
+{{ pdb }} =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = {{ host }})(PORT = {{ port }}))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = {{ pdb }})
+    )
+  )
+
+{% endfor %}
+
+

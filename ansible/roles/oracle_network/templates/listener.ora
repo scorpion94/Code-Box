@@ -1,0 +1,22 @@
+{% set host = ansible_facts['all_ipv4_addresses'][1] | default(ansible_facts["hostname"]) %}
+{% set port = 1521 %}
+
+
+ADR_BASE_LISTENER = /u01/app/oracle
+
+LISTENER_{{ cdb }} =
+  (DESCRIPTION_LIST =
+    (DESCRIPTION =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = {{ host }})(PORT = {{ port }}))
+      (ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC1521))
+    )
+  )
+
+SID_LIST_LISTENER =
+  (SID_LIST =
+    (SID_DESC =
+      (GLOBAL_DBNAME = {{ cdb }})
+      (ORACLE_HOME = {{ oracle_home }})
+      (SID_NAME = {{ cdb }})
+    )
+  )

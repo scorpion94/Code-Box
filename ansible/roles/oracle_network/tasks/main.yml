@@ -1,0 +1,17 @@
+---
+- name: "Rollout templates"
+  ansible.builtin.template:
+    src: "{{ template_name }}"
+    dest: "{{ oracle_home }}/network/admin"
+    owner: oracle
+    group: oracle
+    mode: "0644"
+    backup: true
+  loop: "{{ (ora_facts_dict | dict2items) | product(['listener.ora', 'tnsnames.ora']) | list }}"
+  loop_control:
+    label: "{{ cdb }} -> {{ template_name }}"
+  vars:
+    cdb: "{{ item.0.key }}"
+    db_vars: "{{ item.0.value }}"
+    oracle_home: "{{ item.0.value.home }}"
+    template_name: "{{ item.1 }}"
