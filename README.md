@@ -22,7 +22,3 @@ Dieses Repo ist eine Sammlung verschiedener Schnipsel. Bestehend aus, Skripten, 
 
 ## KI generiete Skripte
 - Auch hier drauf verweisen, das das Skript mit KI generiert wurde
-
-
-# Referenzen
-https://github.com/Rendanic/SQL-Zauberkasten
