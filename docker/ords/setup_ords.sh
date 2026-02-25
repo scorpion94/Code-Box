@@ -1,8 +1,8 @@
 #!/bin/bash
 ORDS_PATH=${ORDS_PATH:-/u01/ords}
-ORDS_CONFIG=${ORDS_CONFIG:-/u01/ords/config}
+ORDS_CONFIG=${ORDS_CONFIG:-/u01/config_ords}
 ORDS_PORT=${ORDS_PORT:-8080}
-ORDS_LOGPATH=${ORDS_LOGPATH:-/u01/ords/logs}
+ORDS_LOGPATH=${ORDS_LOGPATH:-/u01/logs_ords}
 DB_HOST=${DB_HOST:-192.168.56.10}
 DB_PORT=${DB_PORT:-1521}
 APEX_PATH=${APEX_PATH:-/u01/apex_242/}
@@ -35,6 +35,3 @@ fi
 # Removed line since I switched to CDN from oracle
 # "${ORDS_PATH}"/bin/ords --config "${ORDS_CONFIG}" config set standalone.static.path "${APEX_PATH}"/apex/images
 "${ORDS_PATH}"/bin/ords --config "${ORDS_CONFIG}" config set standalone.context.path /ords
-
-echo "Delete Passwordfile"
-rm -f "${ORDS_PATH}"/password.txt
