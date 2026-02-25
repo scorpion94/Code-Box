@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ORDS_CONFIG=${ORDS_CONFIG:-/u01/ords/config}
+ORDS_CONFIG=${ORDS_CONFIG:-/u01/config_ords}
 ORDS_PATH=${ORDS_PATH:-/u01/ords}
 
 echo "=====DISPLAY ORDS CONFIG====="

@@ -1,15 +1,14 @@
 FROM arm64v8/oraclelinux:8.10
 
 # Manadatory Package installation + Create Volume
-# Note oracle-database-preinstall-19c creates User oracle by default
-RUN yum -y --setopt=install_weak_deps=False --setopt=tsflags=nodocs install curl unzip \
-  && yum clean all && rm -rf /var/cache/yum /var/cache/dnf /tmp/* /var/tmp/* \
+RUN yum -y --setopt=install_weak_deps=False --setopt=tsflags=nodocs install curl unzip java-17-headless \
+  && yum clean all \
+  && rm -rf /var/cache/yum /var/cache/dnf /tmp/* /var/tmp/* \
   && groupadd oinstall \
   && useradd -g oinstall oracle \
-  && mkdir -p /u01/ords/config /u01/ords/logs \
+  && mkdir -p /u01/ords/ /u01/config_ords /u01/logs_ords \
   && chown -R oracle:oinstall /u01
 
-# Switch User-Context to oracle - since it shouldn't run on root
 ENV ORDS_PATH="/u01/ords" \
     PATH=${PATH}:/u01/ords/bin
 
@@ -19,9 +18,11 @@ RUN curl -L -o "${ORDS_PATH}"/ords-25.4.0.364.1739.zip https://download.oracle.c
 
 COPY --chown=oracle:oinstall --chmod=775 *.sh password.txt "${ORDS_PATH}"
 
-RUN "${ORDS_PATH}/setup_ords.sh"
+RUN "${ORDS_PATH}/setup_ords.sh" \
+    && rm -f "${ORDS_PATH}/password.txt"
 
 EXPOSE 8080
+# Switch User-Context to oracle - since it shouldn't run on root
 USER oracle
 CMD ["/u01/ords/startup_ords.sh"]
 
