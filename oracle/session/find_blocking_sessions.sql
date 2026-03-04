@@ -1,3 +1,4 @@
+-- Desc: Find Blocking Sessions
 select
    blocking_session, sid, serial#,wait_class,
    seconds_in_wait

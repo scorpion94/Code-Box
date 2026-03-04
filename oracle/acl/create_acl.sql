@@ -1,3 +1,4 @@
+-- Desc: Create ACL
 --ACL assinged to more then one User 
 begin
     DBMS_NETWORK_ACL_ADMIN.CREATE_ACL('<ACL_NAME>.xml','<Description>','<Owner>',TRUE,'connect');

@@ -1,1 +1,2 @@
+-- Get compiler from oject
 select * from dba_stored_settings where param_name = 'plsql_code_type' and object_name like '%&object_name%';

@@ -1,3 +1,4 @@
+# Desc: Example of autoupgrade config
 # https://mikedietrichde.com/2019/06/13/create-and-adjust-the-config-file-for-autoupgrade-19c/
 # https://mikedietrichde.com/2019/07/12/autoupgrade-analyze-fixups-upgrade-and-deploy-modes/
 #Global configurations

@@ -1,5 +1,9 @@
-# General Stat command
-stat <filename>
+#!/bin/bash
+# Desc: General Stat command
+
+filename="test.txt"
+
+stat "${filename}"
 
 # stat usefull Format Options
 # Reference https://www.gnu.org/software/coreutils/manual/html_node/stat-invocation.html - 03.10.2025
@@ -14,8 +18,8 @@ stat <filename>
 # %y --> Last modified
 # %x --> Last read
 
-stat -c "%n %a %U %G %s %y" <filename>
+stat -c "%n %a %U %G %s %y" "${filename}"
 
 # Stat Options with a little description
-stat -c "Name: %N | Permissions: %a | User: %U | Group: %G | Size: %s | Last modified: %y" test_link 
+stat -c "Name: %N | Permissions: %a | User: %U | Group: %G | Size: %s | Last modified: %y" "${filename}" 
 # Name: 'test_link' -> 'test/test' | Permissions: 777 | User: scorpion | Group: scorpion | Size: 9 | Last modified: 2025-10-03 10:49:58.889475847 +0200

@@ -1,3 +1,4 @@
+-- Desc: PLSQL Loop Example
 BEGIN 
   FOR rec IN (<sql-statement>)
     LOOP

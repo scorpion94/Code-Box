@@ -1,1 +1,2 @@
+-- Desc: Get Path for Datafiles
 SELECT SUBSTR(name, 1, INSTR(name, '/', -1) - 1) AS file_path FROM v$datafile;

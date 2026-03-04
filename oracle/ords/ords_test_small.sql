@@ -1,3 +1,5 @@
+-- Desc: Create quick and dirty ords test
+
 CREATE TABLE obst(name VARCHAR2(8)); 
 INSERT INTO obst (name) VALUES ('BANANE');
 COMMIT;

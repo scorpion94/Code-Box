@@ -1,3 +1,4 @@
+-- Desc: Get Execution Details for SQL-ID
 SELECT snap.SNAP_ID,
        to_char(snap.BEGIN_INTERVAL_TIME,'DD.MM.YYYY HH24:MI') begin_interval_time,
        to_char(snap.END_INTERVAL_TIME,'DD.MM.YYYY HH24:MI') end_interval_time,

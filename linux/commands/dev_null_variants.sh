@@ -1,5 +1,6 @@
-# Ways to link output to /dev/null
+#!/bin/bash
+# Desc: Ways to link output to /dev/null
 
-> /dev/null 2>&1
-&> /dev/null
-1>/dev/null 2>/dev/null
+echo "Hello" > /dev/null 2>&1
+echo "Hello" &> /dev/null
+echo "Hello" 1>/dev/null 2>/dev/null

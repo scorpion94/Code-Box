@@ -1,3 +1,4 @@
+-- Desc: Get execution Time for SQL-Statements in Time Range
 SELECT SQLS.SQL_ID, SQLS.MODULE,
        ROUND(SQLS.ELAPSED_TIME_DELTA / 1000 / 1000
              ,2) ELAPSED_TIME_DELTA_IN_SECONDS,

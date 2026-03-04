@@ -1,3 +1,6 @@
+#!/bin/bash
+# Desc: Case exmaple
+
 read -rp "y/n " reply
 echo " "
 while true

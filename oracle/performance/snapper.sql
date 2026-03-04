@@ -1,3 +1,4 @@
+-- Desc: Tanel Poder Snapper (https://tanelpoder.com/snapper/)
 ------------------------------------------------------------------------------
 --
 --

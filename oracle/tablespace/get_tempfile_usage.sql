@@ -1,3 +1,4 @@
+-- Desc: Get Size of Tempfile
 select t.tablespace_name,
        t.file_name,
        round(t.bytes / 1024 / 1024 / 1024, 2) as GB_USED,
