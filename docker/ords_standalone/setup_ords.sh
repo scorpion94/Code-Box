@@ -16,8 +16,6 @@ else
   exit 1
 fi
 
-echo "Hostname: ${DB_HOST} Port: ${DB_PORT} Servicename: ${DB_SERVICENAME}"
-
 "${ORDS_PATH}"/bin/ords --config "${ORDS_CONFIG}" install \
   --admin-user SYS \
   --db-hostname "${DB_HOST}" \

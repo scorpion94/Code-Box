@@ -25,4 +25,3 @@ EXPOSE 8080
 # Switch User-Context to oracle - since it shouldn't run on root
 USER oracle
 CMD ["/u01/ords/startup_ords.sh"]
-
