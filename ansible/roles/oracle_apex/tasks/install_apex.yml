@@ -1,0 +1,13 @@
+---
+- name: "Debug"
+  ansible.builtin.debug:
+    msg: "{{ item.value.pdbs | reject('equalto', 'PDB$SEED') }}"
+
+- name: "Test"
+  ansible.builtin.script: "install_apex.sh"
+  environment:
+    ORACLE_SID: "{{ item.key }}"
+    ORACLE_PDB_SID: "{{ item.value.pdbs | reject('equalto', 'PDB$SEED') | first }}"
+    tablespace: "{{ oracle_apex_tablespace }}"
+  register: oracle_apex_install_out
+  changed_when: oracle_apex_install_out.rc != 0

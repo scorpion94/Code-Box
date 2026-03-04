@@ -1,0 +1,8 @@
+---
+oracle_apex_link: "https://download.oracle.com/otn_software/apex/apex_24.2_en.zip"
+oracle_apex_md5: "39a54c97a994a34d52dcbd1dbb91d3fa"
+oracle_apex_version: "24.2"
+oracle_apex_file_name: "apex_24.2_en.zip"
+oracle_apex_download_zip: false
+oracle_apex_tablespace: "APEX"
+oracle_apex_install_python_modules: true

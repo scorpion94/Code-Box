@@ -1,0 +1,37 @@
+---
+- name: "Install python3 oracledb"
+  ansible.builtin.pip:
+    name: oracledb
+    virtualenv: /Users/Lennart.Jarsetz/git/venv
+  when: oracle_apex_install_python_modules
+  delegate_to: localhost
+  run_once: true
+
+- name: "Download apex zip file"
+  ansible.builtin.get_url:
+    url: "{{ oracle_apex_link }}"
+    dest: "{{ role_path }}/files/"
+    checksum: md5:{{ oracle_apex_md5 }}
+    mode: "0644"
+  run_once: true
+  delegate_to: localhost
+  when: oracle_apex_download_zip
+
+- name: "Create apex directory"
+  ansible.builtin.file:
+    path: "/u01/apex{{ oracle_apex_version | replace('.', '_') }}"
+    state: directory
+    mode: "0774"
+
+- name: "Unpack apex zip-archive"
+  ansible.builtin.unarchive:
+    src: "{{ role_path }}/files/{{ oracle_apex_file_name }}"
+    dest: "/u01/apex{{ oracle_apex_version | replace('.', '_') }}/"
+  when: oracle_apex_download_zip
+
+- name: "Run over oracle databases"
+  ansible.builtin.include_tasks:
+    file: "install_apex.yml"
+  loop: "{{ ora_facts_dict | dict2items }}"
+  when:
+    - ora_facts_dict is defined
