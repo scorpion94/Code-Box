@@ -1,3 +1,4 @@
 .vscode/
 ansible/playbooks/
 *password*
+*.zip
