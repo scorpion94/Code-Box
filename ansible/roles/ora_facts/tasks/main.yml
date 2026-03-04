@@ -22,4 +22,4 @@
 - name: "Print ora_facts_dict"
   ansible.builtin.debug:
     var: ora_facts_dict
-  when: "ansible_verbosity > 2"
+  when: "ansible_verbosity >= 2"
