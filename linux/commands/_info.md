@@ -9,11 +9,11 @@ Small utilities, examples and helper scripts for everyday development tasks.
 
 ## Available Commands
 
-- [case.sh](case.sh) → No description
-- [dev_null_variants.sh](dev_null_variants.sh) → No description
-- [set_hostname.sh](set_hostname.sh) → No description
-- [split.sh](split.sh) → No description
-- [stat.sh](stat.sh) → No description
+- [case_example.sh](case_example.sh) → Case exmaple
+- [dev_null_variants.sh](dev_null_variants.sh) → Ways to link output to /dev/null
+- [set_hostname_example.sh](set_hostname_example.sh) → Set hostname on Linux
+- [split_file_example.sh](split_file_example.sh) → Split File in multiple files
+- [stat_example.sh](stat_example.sh) → General Stat command
 
 ---
 

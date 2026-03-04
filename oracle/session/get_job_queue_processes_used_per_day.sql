@@ -1,4 +1,4 @@
---Select job_queue_processes
+-- Desc: Get job_queue_processes used - day overview
 SELECT INSTANCE_NUMBER INST
       ,TO_CHAR(BEGIN_TIME, 'YYYY-MM-DD') DATUM
       ,MAX(PROCESSES)

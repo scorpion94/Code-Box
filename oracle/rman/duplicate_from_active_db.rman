@@ -1,3 +1,4 @@
+# Desc: Example duplicate from active database
 run {
 DUPLICATE DATABASE TO <target_db_name>
     FROM ACTIVE DATABASE

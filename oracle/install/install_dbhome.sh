@@ -1,4 +1,5 @@
 #!/bin/bash
+# Desc: Small Shell-Script for installing a DB-Home
 export ORACLE_HOME=/u01/app/oracle/product/1926_ee
 export ORACLE_HOSTNAME=$(hostname -s)
 export ORA_INVENTORY=/u01/app/oraInventory

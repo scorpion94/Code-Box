@@ -1,3 +1,4 @@
+-- Desc: Get SPID from SID
 select b.spid,a.sid, a.serial#,a.username, a.osuser 
 from v$session a, v$process b 
 where a.paddr= b.addr 

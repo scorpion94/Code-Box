@@ -1,3 +1,4 @@
+-- Desc: Exmaples to work with timezone_file
 select to_timestamp_tz('2007-03-28 10:00:00 US/EASTERN','YYYY-MM-DD HH24:MI:SS TZR') from dual;
 /*
 TO_TIMESTAMP_TZ('2007-03-2810:00:00US/EASTERN','YYYY-MM-DDHH24:MI:SSTZR')

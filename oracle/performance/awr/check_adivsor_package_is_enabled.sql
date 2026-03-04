@@ -1,3 +1,4 @@
+-- Desc: Check if Diag + Tuning Pack is enabled
 -- https://docs.oracle.com/en/database/oracle/oracle-database/19/refrn/CONTROL_MANAGEMENT_PACK_ACCESS.html
 -- => if parameter is set to false its not enabled
 show parameter CONTROL_MANAGEMENT_PACK_ACCESS;

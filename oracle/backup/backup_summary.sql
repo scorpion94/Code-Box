@@ -1,3 +1,4 @@
+-- Desc: List Backup Sets as Summary
 set lines 150;
 alter session set nls_date_format='DD.MM.YYYY HH24:MI:SS';
 col size_gb for 9999999.999

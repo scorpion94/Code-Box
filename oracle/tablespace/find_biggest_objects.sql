@@ -1,3 +1,4 @@
+-- Desc: Find biggest objects in Tablespace
 SELECT OWNER, 
        SEGMENT_NAME, 
        SEGMENT_TYPE,

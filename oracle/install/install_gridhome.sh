@@ -1,3 +1,5 @@
+#!/bin/bash
+# Desc: Example of installing grid-infrastructure
 ./gridSetup.sh -silent \
 -waitforcompletion -ignorePrereqFailure -lenientInstallMode \
 -applyPSU /home/oracle/patches/37257886/ \

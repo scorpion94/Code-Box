@@ -1,3 +1,4 @@
+-- Desc: Get Tablespaces usage - Ignores free extends
 select f.file_id,
        f.tablespace_name,
        f.file_name,

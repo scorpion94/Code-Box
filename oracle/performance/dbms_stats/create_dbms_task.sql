@@ -1,3 +1,4 @@
+-- Desc: Report Advisor Task
 -- https://oracle-base.com/articles/12c/optimizer-statistics-advisor-12cr2
 
 ALTER SESSION SET NLS_DATE_FORMAT='DD-MM-YYYY HH24:MI:SS';

@@ -1,3 +1,4 @@
+-- Desc: Advanced Spool: Spoolfile with conid + hostname
 SET TERMOUT OFF
 COLUMN pdb_name NEW_VALUE pdb
 COLUMN hostname NEW_VALUE host
