@@ -18,10 +18,14 @@ RUN curl -L -o "${ORDS_PATH}"/ords-25.4.0.364.1739.zip https://download.oracle.c
 
 COPY --chown=oracle:oinstall --chmod=775 *.sh password.txt "${ORDS_PATH}"
 
-RUN "${ORDS_PATH}/setup_ords.sh" \
-    && rm -f "${ORDS_PATH}/password.txt"
+# Creating Certs folder if ORDS should run with SSL
+RUN mkdir -p /certs && chown -R oracle:oinstall /certs
 
-EXPOSE 8080
+RUN "${ORDS_PATH}/setup_ords.sh" \
+    && rm -f "${ORDS_PATH}/password.txt" \
+    && chown -R oracle:oinstall /u01/config_ords /u01/logs_ords
+
+EXPOSE 8080 8443
 # Switch User-Context to oracle - since it shouldn't run on root
 USER oracle
 CMD ["/u01/ords/startup_ords.sh"]
