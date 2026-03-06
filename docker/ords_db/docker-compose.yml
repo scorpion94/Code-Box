@@ -1,44 +1,49 @@
 services:
   database:
-    image: container-registry.oracle.com/database/free:latest
+    image: oracledb:latest
     container_name: oracledb
     ports:
       - "1521:1521"
+    env_file:
+      - ../oracledb/.env.oracledb
     environment:
-      ORACLE_PWD: manager
+      ORACLE_PWD: manager2
     volumes:
       - oracledb-data:/opt/oracle/oradata
+      - oracledb-apex:/opt/oracle/apex_242
     healthcheck:
-      # tnsping to PDB should be enough
-      test: ["CMD-SHELL", "bash -lc 'tnsping FREEPDB1'"]
+      # Check for .apex_install file - since apex takes longest to install
+      test: ["CMD-SHELL", "test -f /opt/oracle/apex_242/.apex_installed"]
       interval: 10s
       timeout: 5s
       retries: 60
       start_period: 60s
 
   ords:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ords:25.4
     container_name: ords
     depends_on:
       database:
         condition: service_healthy
+    env_file:
+      - ../ords/.env.example
     environment:
+      ORDS_CERT: ords.pem
+      ORDS_CERT_KEY: ords-key.pem
       DB_HOST: database
       DB_PORT: 1521
-      # Oracle Free Defaults:
       DB_SERVICENAME: FREEPDB1
-      ORDS_PORT: 8080
-      # Apex is currently used via oracle-cdn 
-      # APEX_PATH: /u01/apex_242/
     ports:
       - "8080:8080"
+      - "8443:8443"
     volumes:
       - ords-config:/u01/config_ords
       - ords-logs:/u01/logs_ords
+      - ./password.txt:/u01/passwords/password.txt:ro
+      - ./certs:/u01/certs:ro
 
 volumes:
   oracledb-data:
+  oracledb-apex:
   ords-config:
   ords-logs:
