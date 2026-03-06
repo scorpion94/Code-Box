@@ -171,13 +171,20 @@ sudo sh -c 'echo "127.0.0.1 ords.local" >> /etc/hosts'
 <summary>2) Generate cert + key</summary>
 
 ```bash
-mkcert ords.local
+mkcert ords.local localhost 127.0.0.1 ::1
 ```
 
 This generates:
 
-- `ords.local.pem`
-- `ords.local-key.pem`
+- `ords.local+3.pem`
+- `ords.local+3-key.pem`
+
+You should rename them:
+
+```bash
+mv ords.local+3.pem ords.pem
+mv ords.local+3-key.pem ords-key.pem
+```
 
 </details>
 
@@ -219,11 +226,16 @@ So prefer either:
 <summary>Run with HTTP+HTTPS ports, certs, password file, env-file</summary>
 
 ```bash
-docker run --rm \
+docker run -d \
   -p 8443:8443 \
   -p 8080:8080 \
   -v "$HOME/certs:/u01/certs:ro" \
   -v "$HOME/password.txt:/u01/passwords/password.txt:ro" \
+  -e DB_HOST=192.168.56.10 \
+  -e DB_PORT=1521 \
+  -e DB_SERVICENAME=ORCL \
+  -e ORDS_CERT=ords.pem \
+  -e ORDS_CERT_KEY=ords-key.pem \
   --env-file .env.example \
   ords_standalone:25.4
 ```
@@ -291,3 +303,16 @@ ords --config /u01/config_ords config list
 ```
 
 </details>
+
+## 9.4 Insecure connection in browser
+Check if certificate is valid and contains domain
+
+<details>
+<summary>Check Cert</summary>
+
+```bash
+openssl x509 -in ords.pem -text -noout | grep -A1 "Subject Alternative Name"
+```
+
+</details>
+

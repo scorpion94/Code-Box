@@ -1,5 +1,6 @@
 import oracledb
 import os
+import sys
 
 
 db_host = os.environ["DB_HOST"]
@@ -27,3 +28,4 @@ try:
 
 except oracledb.Error as e:
     print("Connection failed:", e)
+    sys.exit(1)
