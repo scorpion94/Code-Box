@@ -1,7 +1,7 @@
 FROM arm64v8/oraclelinux:8.10
 
 # Manadatory Package installation + Create Volume
-RUN yum -y --setopt=install_weak_deps=False --setopt=tsflags=nodocs install curl unzip java-17-headless python39 python39-pip \
+RUN yum -y --setopt=install_weak_deps=False --setopt=tsflags=nodocs install curl unzip java-17-headless python39 python39-pip openssl \
   && yum clean all \
   && rm -rf /var/cache/yum /var/cache/dnf /tmp/* /var/tmp/* \
   && groupadd oinstall \
