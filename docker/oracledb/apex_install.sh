@@ -44,9 +44,15 @@ install_apex () {
     select SYS_CONTEXT('USERENV','CON_NAME') from dual;
     exec dbms_output.put_line('====STARTING APEX INSTALLATION====');
     @apexins.sql ${APEX_TABLESPACE} ${APEX_TABLESPACE} TEMP ${APEX_IMAGE_PATH}
+
+    alter user APEX_PUBLIC_USER account unlock;
 EOF
 
   echo "Set Marker for sucessful Apex-Installation"
+
+  echo "Change Passwords for APEX"
+  "${APEX_PATH}/apex_pw_workaround.sh"
+
   touch "${APEX_PATH}"/.apex_installed
 }
 

@@ -10,4 +10,5 @@ RUN mkdir -p "${APEX_PATH}" \
 
 
 # Scripts must be copied into startup to be executed
-COPY --chmod=775 *.sh /opt/oracle/scripts/startup
+COPY --chmod=775 apex_install.sh /opt/oracle/scripts/startup
+COPY --chmod=775 apex_pw_workaround.sh "${APEX_PATH}"
