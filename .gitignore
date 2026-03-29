@@ -4,3 +4,5 @@ ansible/playbooks/
 *.zip
 *.pem
 *.key
+*learn*
+*lesson*
