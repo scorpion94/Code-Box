@@ -1,0 +1,26 @@
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql
+    hostname: mssql
+    restart: unless-stopped
+    volumes:
+      - mssql_data:/var/opt/mssql
+      - shared:/var/opt/mssql/shared 
+
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+      MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD}"
+      MSSQL_AGENT_ENABLED: "true"
+      TZ: "Europe/Berlin"
+
+    env_file:
+      - .env
+
+    ports:
+      - "1433:1433"
+  
+volumes:
+  mssql_data:
+  shared:
