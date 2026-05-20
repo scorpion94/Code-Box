@@ -6,3 +6,4 @@ ansible/playbooks/
 *.key
 *learn*
 *lesson*
+.env
